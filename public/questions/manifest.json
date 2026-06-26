@@ -1,0 +1,68 @@
+[
+  {
+    "module": "math",
+    "file": "math.json",
+    "count": 601,
+    "domains": [
+      "Advanced Math",
+      "Algebra",
+      "Geometry and Trigonometry",
+      "Problem-Solving and Data Analysis"
+    ],
+    "skills": [
+      "Area and volume",
+      "Circles",
+      "Equivalent expressions",
+      "Evaluating statistical claims: Observational studies and experiments ",
+      "Inference from sample statistics and margin of error ",
+      "Linear equations in one variable",
+      "Linear equations in two variables",
+      "Linear functions",
+      "Linear inequalities in one or two variables",
+      "Lines, angles, and triangles",
+      "Nonlinear equations in one variable and systems of equations in two variables ",
+      "Nonlinear functions",
+      "One-variable data: Distributions and measures of center and spread",
+      "Percentages",
+      "Probability and conditional probability",
+      "Ratios, rates, proportional relationships, and units",
+      "Right triangles and trigonometry",
+      "Systems of two linear equations in two variables",
+      "Two-variable data: Models and scatterplots"
+    ],
+    "difficulties": {
+      "E": 224,
+      "M": 182,
+      "H": 195
+    }
+  },
+  {
+    "module": "english",
+    "file": "english.json",
+    "count": 938,
+    "domains": [
+      "Craft and Structure",
+      "Expression of Ideas",
+      "Information and Ideas",
+      "Standard English Conventions"
+    ],
+    "skills": [
+      "Boundaries",
+      "Central Ideas and Details",
+      "Command of Evidence",
+      "Cross-Text Connections",
+      "Cross-text Connections",
+      "Form, Structure, and Sense",
+      "Inferences",
+      "Rhetorical Synthesis",
+      "Text Structure and Purpose",
+      "Transitions",
+      "Words in Context"
+    ],
+    "difficulties": {
+      "E": 324,
+      "M": 325,
+      "H": 289
+    }
+  }
+]

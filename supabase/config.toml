@@ -1,0 +1,10 @@
+[project]
+id = "husjkbwjfrbujbnzuabc"
+name = "sat-prep"
+
+[db]
+port = 54322
+
+[api]
+enabled = true
+port = 54321

@@ -1,0 +1,11 @@
+.quiz {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.progress {
+  text-align: center;
+  font-size: 0.85rem;
+  color: #86868b;
+  margin-bottom: 1rem;
+}
