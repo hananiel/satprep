@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./Question.css";
 
-export default function Question({ question, onAnswer }) {
+export default function Question({ question, onAnswer, onAnswered }) {
   const [selected, setSelected] = useState(null);
   const [showExplanation, setShowExplanation] = useState(false);
 
@@ -17,6 +17,13 @@ export default function Question({ question, onAnswer }) {
     if (selected) return; // already answered
     setSelected(choice.label);
     setShowExplanation(true);
+    const result = {
+      selected: choice,
+      correct: question.answerOptions.some(
+        (o) => o.label === choice && isCorrect(o)
+      ),
+    };
+    if (onAnswered) onAnswered(result);
   };
 
   const handleNext = () => {
@@ -89,9 +96,6 @@ export default function Question({ question, onAnswer }) {
         <div className="explanation">
           <h4>Explanation</h4>
           <div dangerouslySetInnerHTML={{ __html: question.rationale }} />
-          <button className="next-btn" onClick={handleNext}>
-            Next →
-          </button>
         </div>
       )}
     </div>

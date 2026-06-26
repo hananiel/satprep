@@ -39,12 +39,26 @@ export default function Quiz({ questions, filters }) {
     return <Results questions={pool} answers={answers} filters={filters} timeSeconds={Math.floor((Date.now() - startTime.current) / 1000)} onRestart={restart} />;
   }
 
+  const [answered, setAnswered] = useState(false);
+
   return (
     <div className="quiz">
       <div className="progress">
         Question {current + 1} of {pool.length}
       </div>
-      <Question question={pool[current]} onAnswer={handleAnswer} key={pool[current].id} />
+      <Question
+        question={pool[current]}
+        onAnswer={(ans) => { setAnswered(false); handleAnswer(ans); }}
+        onAnswered={() => setAnswered(true)}
+        key={pool[current].id}
+      />
+      {answered && (
+        <div className="next-bar">
+          <button className="next-btn" onClick={() => document.querySelector('.question .next-btn-hidden')?.click()}>
+            Next →
+          </button>
+        </div>
+      )}
     </div>
   );
 }
