@@ -17,11 +17,15 @@ export default function Quiz({ questions, filters }) {
   const [pool] = useState(() => shuffle(questions).slice(0, BATCH_SIZE));
   const [current, setCurrent] = useState(0);
   const [answers, setAnswers] = useState([]);
+  const [pendingAnswer, setPendingAnswer] = useState(null);
   const [showResults, setShowResults] = useState(false);
   const startTime = useRef(Date.now());
 
-  const handleAnswer = (answer) => {
-    setAnswers([...answers, answer]);
+  const handleNext = () => {
+    if (!pendingAnswer) return;
+    const nextAnswers = [...answers, pendingAnswer];
+    setAnswers(nextAnswers);
+    setPendingAnswer(null);
     if (current + 1 < pool.length) {
       setCurrent(current + 1);
     } else {
@@ -32,14 +36,24 @@ export default function Quiz({ questions, filters }) {
   const restart = () => {
     setCurrent(0);
     setAnswers([]);
+    setPendingAnswer(null);
     setShowResults(false);
+    startTime.current = Date.now();
   };
 
   if (showResults) {
-    return <Results questions={pool} answers={answers} filters={filters} timeSeconds={Math.floor((Date.now() - startTime.current) / 1000)} onRestart={restart} />;
+    return (
+      <Results
+        questions={pool}
+        answers={answers}
+        filters={filters}
+        timeSeconds={Math.floor((Date.now() - startTime.current) / 1000)}
+        onRestart={restart}
+      />
+    );
   }
 
-  const [answered, setAnswered] = useState(false);
+  const isLast = current + 1 >= pool.length;
 
   return (
     <div className="quiz">
@@ -47,15 +61,14 @@ export default function Quiz({ questions, filters }) {
         Question {current + 1} of {pool.length}
       </div>
       <Question
-        question={pool[current]}
-        onAnswer={(ans) => { setAnswered(false); handleAnswer(ans); }}
-        onAnswered={() => setAnswered(true)}
         key={pool[current].id}
+        question={pool[current]}
+        onAnswered={setPendingAnswer}
       />
-      {answered && (
+      {pendingAnswer && (
         <div className="next-bar">
-          <button className="next-btn" onClick={() => document.querySelector('.question .next-btn-hidden')?.click()}>
-            Next →
+          <button className="next-btn" onClick={handleNext}>
+            {isLast ? "See Results" : "Next →"}
           </button>
         </div>
       )}

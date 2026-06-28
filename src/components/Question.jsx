@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./Question.css";
 
-export default function Question({ question, onAnswer, onAnswered }) {
+export default function Question({ question, onAnswered }) {
   const [selected, setSelected] = useState(null);
   const [showExplanation, setShowExplanation] = useState(false);
 
@@ -17,22 +17,25 @@ export default function Question({ question, onAnswer, onAnswered }) {
     if (selected) return; // already answered
     setSelected(choice.label);
     setShowExplanation(true);
-    const result = {
-      selected: choice,
-      correct: question.answerOptions.some(
-        (o) => o.label === choice && isCorrect(o)
-      ),
-    };
-    if (onAnswered) onAnswered(result);
+    if (onAnswered) {
+      onAnswered({
+        selected: choice.label,
+        correct: isCorrect(choice),
+      });
+    }
   };
 
-  const handleNext = () => {
-    onAnswer({
-      selected,
-      correct: question.answerOptions.some(
-        (o) => o.label === selected && isCorrect(o)
-      ),
-    });
+  const handleSPRSubmit = (value) => {
+    if (selected) return;
+    setSelected(value);
+    setShowExplanation(true);
+    const expected = question.correctAnswer || question.keys || [];
+    const correct = expected.some(
+      (k) => String(k).trim().toLowerCase() === value.trim().toLowerCase()
+    );
+    if (onAnswered) {
+      onAnswered({ selected: value, correct });
+    }
   };
 
   const isSPR = question.type === "spr";
@@ -90,7 +93,7 @@ export default function Question({ question, onAnswer, onAnswered }) {
         </div>
       )}
 
-      {isSPR && <SPRInput question={question} onSubmit={handleSelect} selected={selected} />}
+      {isSPR && <SPRInput question={question} onSubmit={handleSPRSubmit} selected={selected} />}
 
       {showExplanation && (
         <div className="explanation">
